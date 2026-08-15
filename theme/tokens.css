@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* ── Dose Certa · direção "Rótulo" ─────────────────────────────────────
+   O rótulo do pote é a linguagem: tabela nutricional, tipografia pesada,
+   fios de 1px, micro-rótulos em caixa alta, dado exposto sem enfeite.
+   Não há ornamento que não seja dado.
+
+   Acento semântico: ÓXIDO = valor (botão primário, chip selecionado,
+   número de destaque, highlight). AÇO = estrutura (eyebrow, ícone, seta,
+   borda, micro-rótulo, fio divisor). Óxido em tudo faz o site parecer
+   institucional genérico.
+
+   Contraste já calculado (WCAG, contra --color-bg):
+     text 15.8:1 · text-muted ~7.5:1 · aco 7.85:1 · oxido 4.96:1
+     text-dim 3.47:1 → NUNCA em texto de leitura, só decorativo ou ≥24px
+   Sobre fundo óxido: --color-bg dá 4.96:1 (AA) e --color-text dá 3.37:1
+   (falha AA) → texto sobre óxido é SEMPRE --color-bg.
+   ─────────────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-bg: #0b0a09;            /* carvão quente */
+  --color-panel: #14110f;         /* superfície nível 1 */
+  --color-panel-raised: #1c1815;  /* superfície nível 2 */
+  --color-line: #2e2724;          /* fios e divisores */
+
+  --color-oxido: #e24b24;         /* acento — valor/ação */
+  --color-oxido-bright: #ff7a4d;  /* hover, brilho */
+  --color-oxido-dim: #7a2c15;     /* bordas sutis */
+
+  --color-aco: #a9a29b;           /* neutro — estrutura */
+
+  --color-text: #f2ebe1;          /* off-white quente, cor de papel de rótulo */
+  --color-text-muted: #a79e94;
+  --color-text-dim: #6e655d;
+
+  --shadow-oxido-glow: 0 0 24px -8px rgba(226, 75, 36, 0.35);
+
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Foco visível em tudo que é focável — requisito de aceite (spec §12). */
+:focus-visible {
+  outline: 2px solid var(--color-oxido);
+  outline-offset: 2px;
+}
+
+/* ── Assinatura "Rótulo" ─────────────────────────────────────────── */
+
+/* Display no eixo de largura expandido do Archivo variável. */
+.display-expandido {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+/* Micro-rótulo utilitário: mono, caixa alta, tracking largo, aço. */
+.micro-rotulo {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-aco);
+}
+
+/* O fio de 1px que separa as linhas da ficha técnica. */
+.fio-rotulo {
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* Card do catálogo. O hover (2px + fio óxido) é a ÚNICA interação
+   animada do site e vive atrás de @media (hover: hover) — em touch o
+   card é estático e nada de informação depende dele. */
+.card-rotulo {
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-line);
+}
+
+@media (hover: hover) {
+  .card-rotulo {
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card-rotulo:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-oxido);
+  }
+}
+
+/* Entrada do catálogo: escalonada em 40ms por card, uma vez, no load.
+   O delay é aplicado inline (style) pelo componente. */
+@keyframes entrada-card {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.entrada-card {
+  animation: entrada-card 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Respeito a quem pediu menos movimento no SO ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
