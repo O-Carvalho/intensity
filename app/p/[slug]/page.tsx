@@ -28,7 +28,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const produto = await getProduto(slug)
-  if (!produto) return buildMetadata({ titulo: "Produto não encontrado" })
+  if (!produto) return buildMetadata({ titulo: home.naoEncontrado.titulo })
 
   // O que converte no grupo do WhatsApp é o preview: imagem, título e
   // descrição próprios de cada produto (ADR-01).
