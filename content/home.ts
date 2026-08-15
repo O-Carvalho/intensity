@@ -44,6 +44,12 @@ export const home = {
     texto: "Talvez o link tenha vindo quebrado. Escolhe por aqui:",
     voltar: "Ir para o catálogo",
   },
+  ir: {
+    titulo: "Redirecionando…",
+    eyebrow: "indo para a loja",
+    fallbackPrefixo: "Se nada acontecer,",
+    fallbackLink: "clique aqui",
+  },
   rodape: {
     transparencia: "Recebo comissão pelas indicações. O preço para você é o mesmo.",
   },

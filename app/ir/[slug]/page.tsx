@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { getProduto } from "@/content/produtos"
 import { jsonParaScript, scriptDeEvento } from "@/lib/analytics"
+import { home } from "@/content/home"
 
 /** Página de saída: registra select_item e manda para a loja parceira.
  *
@@ -10,7 +11,7 @@ import { jsonParaScript, scriptDeEvento } from "@/lib/analytics"
  *  rodar no browser. O custo é ~120ms; o retorno é saber, por produto,
  *  o que gera clique real — o único número que decide o dia 30. */
 export const metadata: Metadata = {
-  title: "Redirecionando…",
+  title: home.ir.titulo,
   robots: { index: false, follow: false },
 }
 
@@ -42,16 +43,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </noscript>
 
       <main className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center">
-        <p className="micro-rotulo">indo para a loja</p>
+        <p className="micro-rotulo">{home.ir.eyebrow}</p>
         <p className="display-expandido text-2xl text-text">{produto.nome}</p>
         <p className="text-sm text-text-muted">
-          Se nada acontecer,{" "}
+          {home.ir.fallbackPrefixo}{" "}
           <a
             href={produto.link_afiliado}
             rel="noopener noreferrer nofollow sponsored"
             className="text-oxido underline underline-offset-4"
           >
-            clique aqui
+            {home.ir.fallbackLink}
           </a>
           .
         </p>
