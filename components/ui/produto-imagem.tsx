@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const PLACEHOLDER = "/produtos/placeholder.png"
 
@@ -18,6 +18,13 @@ export function ProdutoImagem({
   priority?: boolean
 }) {
   const [origem, setOrigem] = useState(src)
+
+  // Reseta a origem quando a prop src muda, evitando que uma instância
+  // reutilizada mostre a imagem placeholder do produto anterior.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOrigem(src)
+  }, [src])
 
   return (
     <div className="relative aspect-square w-full overflow-hidden bg-panel-raised">
