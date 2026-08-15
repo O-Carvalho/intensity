@@ -35,12 +35,21 @@ declare global {
 
 /** JSON seguro para dentro de <script>: uma sequência "</script>" vinda da
  *  planilha fecharia a tag e o resto viraria HTML executável. Escapar "<"
- *  e os separadores de linha U+2028/U+2029 elimina a classe inteira. */
+ *  e os separadores de linha U+2028/U+2029 elimina a classe inteira.
+ *
+ *  As três strings de substituição abaixo usam DUAS barras invertidas de
+ *  propósito. Uma barra só seria resolvida pelo próprio compilador TypeScript
+ *  e o `.replace` viraria um no-op (trocar o caractere pelo próprio
+ *  caractere). Com duas barras, o que sobra em tempo de execução é o texto
+ *  de escape (ex.: os seis caracteres \, u, 0, 0, 3, c) — sem nenhum "<"
+ *  literal na saída, então o tokenizer de HTML não fecha a </script>. O
+ *  parser de JavaScript, ao reidratar o valor, devolve o caractere
+ *  original, então o JSON continua correto em tempo de execução. */
 export function jsonParaScript(valor: unknown): string {
   return JSON.stringify(valor)
-    .replace(/</g, "\u003c")
-    .replace(/\u2028/g, "\u2028")
-    .replace(/\u2029/g, "\u2029")
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029")
 }
 
 /** Dispara do cliente. Silencioso quando o GA4 não está configurado —
