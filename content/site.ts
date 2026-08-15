@@ -20,6 +20,11 @@ export const site = {
     { label: "Catálogo", href: "/" },
     { label: "Sobre", href: "/sobre" },
   ],
+  acessibilidade: {
+    voltarAoTopo: "Voltar ao início",
+    abrirMenu: "Abrir menu",
+    fecharMenu: "Fechar menu",
+  },
 } as const
 
 /** Link de conversa com o Diogo. Retorna null enquanto o número não for

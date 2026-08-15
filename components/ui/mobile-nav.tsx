@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { AnimatePresence, motion } from "motion/react"
 import { Menu, X } from "lucide-react"
+import { site } from "@/content/site"
 
 export function MobileNav({ nav }: { nav: readonly { label: string; href: string }[] }) {
   const [open, setOpen] = useState(false)
@@ -34,7 +35,7 @@ export function MobileNav({ nav }: { nav: readonly { label: string; href: string
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Fechar menu" : "Abrir menu"}
+        aria-label={open ? site.acessibilidade.fecharMenu : site.acessibilidade.abrirMenu}
         aria-expanded={open}
         className="flex h-10 w-10 items-center justify-center text-aco transition-colors hover:text-text"
       >
