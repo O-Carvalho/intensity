@@ -62,8 +62,43 @@ export function enviarEvento(evento: AnalyticsEvent): void {
 
 /** Versão em string, para o <script> inline do /ir/[slug] — lá o evento
  *  precisa sair ANTES da navegação, então não dá para esperar o React
- *  hidratar. O `typeof gtag` protege o caso sem GA4 configurado. */
+ *  hidratar. O `typeof gtag` protege o caso sem GA4 configurado.
+ *
+ *  "Dispara e esquece" — sem confirmação de envio. Ver
+ *  `scriptDeRedirecionamento` para o caso do /ir/[slug], que precisa
+ *  saber quando o GA confirmou (ou desistir depois de um tempo). */
 export function scriptDeEvento(evento: AnalyticsEvent): string {
   const { nome, ...params } = evento
   return `if(typeof gtag==='function'){gtag('event',${jsonParaScript(nome)},${jsonParaScript(params)});}`
+}
+
+/** Script completo do /ir/[slug]: registra o evento e SEMPRE navega —
+ *  cedo, se o GA confirmar o envio via `event_callback`; senão, no piso
+ *  de `timeoutMs`. Nunca deixa a pessoa presa esperando, com ou sem GA
+ *  configurado.
+ *
+ *  Por que não bastava `scriptDeEvento` sozinho: o componente de GA4
+ *  (`@next/third-parties`) só injeta o `gtag` real depois da hidratação
+ *  do React — mas este script roda ANTES disso (é HTML puro, executa na
+ *  hora que o navegador encontra a tag). Sem essa espera curta e sem o
+ *  `event_callback`, o disparo de `select_item` corria contra a
+ *  navegação e podia nunca sair — exatamente o único número que decide
+ *  o dia 30 (spec §8). O layout raiz agora define `gtag` de forma
+ *  síncrona (ver app/layout.tsx), então a chamada abaixo sempre encontra
+ *  a fila pronta; o `event_callback` só espera a CONFIRMAÇÃO de envio. */
+export function scriptDeRedirecionamento(
+  evento: AnalyticsEvent,
+  link: string,
+  timeoutMs = 400,
+): string {
+  const { nome, ...params } = evento
+  return [
+    "var feito=false;",
+    `function ir(){if(feito)return;feito=true;location.replace(${jsonParaScript(link)});}`,
+    // Object.assign, não concatenação de texto no JSON: continua correto
+    // mesmo se `params` algum dia vier vazio, sem depender da posição do
+    // "}" final na string escapada.
+    `if(typeof gtag==='function'){gtag('event',${jsonParaScript(nome)},Object.assign({},${jsonParaScript(params)},{event_callback:ir}));}`,
+    `setTimeout(ir,${timeoutMs});`,
+  ].join("")
 }
