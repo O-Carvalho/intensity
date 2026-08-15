@@ -60,32 +60,21 @@ export function enviarEvento(evento: AnalyticsEvent): void {
   window.gtag("event", nome, params)
 }
 
-/** Versão em string, para o <script> inline do /ir/[slug] — lá o evento
- *  precisa sair ANTES da navegação, então não dá para esperar o React
- *  hidratar. O `typeof gtag` protege o caso sem GA4 configurado.
- *
- *  "Dispara e esquece" — sem confirmação de envio. Ver
- *  `scriptDeRedirecionamento` para o caso do /ir/[slug], que precisa
- *  saber quando o GA confirmou (ou desistir depois de um tempo). */
-export function scriptDeEvento(evento: AnalyticsEvent): string {
-  const { nome, ...params } = evento
-  return `if(typeof gtag==='function'){gtag('event',${jsonParaScript(nome)},${jsonParaScript(params)});}`
-}
-
 /** Script completo do /ir/[slug]: registra o evento e SEMPRE navega —
- *  cedo, se o GA confirmar o envio via `event_callback`; senão, no piso
- *  de `timeoutMs`. Nunca deixa a pessoa presa esperando, com ou sem GA
- *  configurado.
+ *  cedo, se o GA confirmar o envio via `event_callback`; sem GA
+ *  configurado, na hora, sem esperar nada; com GA configurado mas sem
+ *  confirmação, no piso de `timeoutMs`. Nunca deixa a pessoa presa
+ *  esperando, e nunca espera à toa quando não há nada pra confirmar.
  *
- *  Por que não bastava `scriptDeEvento` sozinho: o componente de GA4
- *  (`@next/third-parties`) só injeta o `gtag` real depois da hidratação
- *  do React — mas este script roda ANTES disso (é HTML puro, executa na
- *  hora que o navegador encontra a tag). Sem essa espera curta e sem o
- *  `event_callback`, o disparo de `select_item` corria contra a
- *  navegação e podia nunca sair — exatamente o único número que decide
- *  o dia 30 (spec §8). O layout raiz agora define `gtag` de forma
- *  síncrona (ver app/layout.tsx), então a chamada abaixo sempre encontra
- *  a fila pronta; o `event_callback` só espera a CONFIRMAÇÃO de envio. */
+ *  Por que precisa desse jeito: o layout raiz define `gtag` de forma
+ *  síncrona (ver app/layout.tsx) exatamente para que ele já exista
+ *  quando este script — HTML puro, roda no parse, antes de qualquer
+ *  hidratação do React — for alcançado. Sem essa garantia, o disparo de
+ *  `select_item` corria contra a navegação e podia nunca sair —
+ *  exatamente o único número que decide o dia 30 (spec §8). O
+ *  `event_callback` só espera a CONFIRMAÇÃO de envio; o piso é a rede de
+ *  segurança para quando o gtag.js real (carregado async) não responde
+ *  a tempo — e só entra em jogo quando o GA está de fato configurado. */
 export function scriptDeRedirecionamento(
   evento: AnalyticsEvent,
   link: string,
@@ -95,10 +84,14 @@ export function scriptDeRedirecionamento(
   return [
     "var feito=false;",
     `function ir(){if(feito)return;feito=true;location.replace(${jsonParaScript(link)});}`,
+    "if(typeof gtag==='function'){",
     // Object.assign, não concatenação de texto no JSON: continua correto
     // mesmo se `params` algum dia vier vazio, sem depender da posição do
     // "}" final na string escapada.
-    `if(typeof gtag==='function'){gtag('event',${jsonParaScript(nome)},Object.assign({},${jsonParaScript(params)},{event_callback:ir}));}`,
+    `gtag('event',${jsonParaScript(nome)},Object.assign({},${jsonParaScript(params)},{event_callback:ir}));`,
     `setTimeout(ir,${timeoutMs});`,
+    // Sem GA configurado, `gtag` nem existe — não há o que confirmar,
+    // então o piso de segurança não se aplica: sai na mesma hora.
+    "}else{ir();}",
   ].join("")
 }
