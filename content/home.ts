@@ -33,13 +33,17 @@ export const home = {
     },
   },
   sobre: {
+    eyebrow: "sobre",
     titulo: "Quem indica",
     // [PENDENTE] texto ainda não escrito pelo Diogo. Enquanto for null,
     // a página /sobre exibe só a nota de transparência do rodapé —
     // nunca uma biografia inventada.
     texto: null as string | null,
+    ctaCatalogo: "Ver o catálogo",
+    ctaContato: "Falar comigo",
   },
   naoEncontrado: {
+    eyebrow: "erro 404",
     titulo: "Essa página não existe",
     texto: "Talvez o link tenha vindo quebrado. Escolhe por aqui:",
     voltar: "Ir para o catálogo",
