@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google"
 import { MotionConfig } from "motion/react"
+import { GoogleAnalytics } from "@next/third-parties/google"
 import { Header } from "@/components/sections/header"
 import { Footer } from "@/components/sections/footer"
 import { buildMetadata, websiteJsonLd } from "@/lib/seo"
@@ -49,6 +50,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="flex-1">{children}</div>
           <Footer />
         </MotionConfig>
+        {/* [PENDENTE] Sem NEXT_PUBLIC_GA_ID nenhum script de analytics é
+            carregado — o site funciona igual, só não mede. Setar a
+            variável na Vercel liga os três eventos de uma vez. */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   )
