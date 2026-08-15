@@ -1,6 +1,10 @@
 import type { Metadata } from "next"
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google"
 import { MotionConfig } from "motion/react"
+import { Header } from "@/components/sections/header"
+import { Footer } from "@/components/sections/footer"
+import { buildMetadata, websiteJsonLd } from "@/lib/seo"
+import { site } from "@/content/site"
 import "@/theme/tokens.css"
 
 const archivo = Archivo({
@@ -25,8 +29,8 @@ const plexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Dose Certa",
-  description: "Seleção de suplementos que o Diogo usa e indica.",
+  ...buildMetadata({ titulo: site.tituloSeo }),
+  metadataBase: new URL(site.url),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,8 +39,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="pt-BR"
       className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}
     >
-      <body className="bg-bg font-body text-text antialiased">
-        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      <body className="flex min-h-dvh flex-col bg-bg font-body text-text antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
+        <MotionConfig reducedMotion="user">
+          <Header />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </MotionConfig>
       </body>
     </html>
   )
