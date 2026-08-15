@@ -11,6 +11,7 @@ export const home = {
     tituloDestaques: "Em destaque",
     tituloTodos: "Catálogo completo",
     labelTodos: "Todos",
+    labelFiltroCategoria: "Filtrar por categoria",
     placeholderBusca: "Buscar por nome ou marca",
     semResultado: "Nada com esse nome. Tenta pela categoria ali em cima.",
     // Rótulo do resumo: "15 produtos · 6 categorias"

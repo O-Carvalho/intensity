@@ -28,7 +28,7 @@ export function ChipsCategoria({
   return (
     <div
       role="group"
-      aria-label="Filtrar por categoria"
+      aria-label={home.catalogo.labelFiltroCategoria}
       className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1"
     >
       {opcoes.map((opcao) => {

@@ -13,8 +13,21 @@ import type { Produto } from "@/content/produtos"
  *
  *  `indice` escalona a entrada em 40ms por card. Como a animação é
  *  puramente de entrada (não depende de scroll nem de estado), ela é CSS
- *  puro com delay inline — nenhum JS envolvido. */
-export function ProdutoCard({ produto, indice }: { produto: Produto; indice: number }) {
+ *  puro com delay inline — nenhum JS envolvido.
+ *
+ *  `animar` (default true) liga a classe de entrada e o delay. O
+ *  catálogo filtrável desliga isso depois da primeira interação, porque
+ *  o orçamento de movimento do site é essa entrada tocar uma vez, no
+ *  load — não a cada filtro. */
+export function ProdutoCard({
+  produto,
+  indice,
+  animar = true,
+}: {
+  produto: Produto
+  indice: number
+  animar?: boolean
+}) {
   const linhas = [
     { rotulo: "Marca", valor: produto.marca },
     ...(produto.porcao ? [{ rotulo: "Porção", valor: produto.porcao }] : []),
@@ -23,8 +36,8 @@ export function ProdutoCard({ produto, indice }: { produto: Produto; indice: num
   return (
     <Link
       href={`/p/${produto.slug}`}
-      className="card-rotulo entrada-card flex h-full flex-col"
-      style={{ animationDelay: `${indice * 40}ms` }}
+      className={`card-rotulo flex h-full flex-col${animar ? " entrada-card" : ""}`}
+      style={animar ? { animationDelay: `${indice * 40}ms` } : undefined}
     >
       <ProdutoImagem src={produto.imagem_url} alt={produto.nome} />
 

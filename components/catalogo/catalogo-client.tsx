@@ -21,6 +21,12 @@ export function CatalogoClient({
 }) {
   const [categoria, setCategoria] = useState<FiltroCategoria>("todos")
   const [busca, setBusca] = useState("")
+  // A entrada escalonada é um efeito de carregamento único: toca quando a
+  // página abre e não deve repetir a cada filtro. Por isso o gatilho nasce
+  // dentro dos próprios handlers de categoria e busca — nunca de um
+  // useEffect, que dispararia de novo no mount e geraria uma renderização
+  // extra sem necessidade.
+  const [interagiu, setInteragiu] = useState(false)
 
   const filtrados = useMemo(() => {
     const termo = normalizarBusca(busca)
@@ -46,7 +52,10 @@ export function CatalogoClient({
             <input
               type="search"
               value={busca}
-              onChange={(e) => setBusca(e.target.value)}
+              onChange={(e) => {
+                setInteragiu(true)
+                setBusca(e.target.value)
+              }}
               placeholder={home.catalogo.placeholderBusca}
               className="w-full bg-transparent font-mono text-xs uppercase tracking-[0.1em] text-text outline-none placeholder:text-aco"
             />
@@ -55,7 +64,10 @@ export function CatalogoClient({
           <ChipsCategoria
             categorias={categorias}
             selecionada={categoria}
-            onSelecionar={setCategoria}
+            onSelecionar={(c) => {
+              setInteragiu(true)
+              setCategoria(c)
+            }}
           />
         </div>
 
@@ -67,7 +79,7 @@ export function CatalogoClient({
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtrados.map((produto, i) => (
               <li key={produto.slug} className="flex">
-                <ProdutoCard produto={produto} indice={i} />
+                <ProdutoCard produto={produto} indice={i} animar={!interagiu} />
               </li>
             ))}
           </ul>
