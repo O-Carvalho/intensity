@@ -1,8 +1,8 @@
-# Dose Certa
+# Intensity
 
-Vitrine de suplementos que o Diogo usa e indica. Cada produto tem página
-própria com preview para compartilhar no WhatsApp, e o catálogo é
-alimentado por uma planilha do Google.
+Vitrine de suplementos: mais opções, melhores preços, tudo para o treino.
+Cada produto tem página própria com preview para compartilhar no WhatsApp,
+e o catálogo é alimentado por uma planilha do Google.
 
 ## Rodar localmente
 

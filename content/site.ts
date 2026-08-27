@@ -1,9 +1,9 @@
 export const site = {
-  nome: "Dose Certa",
-  tagline: "seleção do Diogo",
-  tituloSeo: "Dose Certa — os suplementos que eu uso e indico",
+  nome: "Intensity",
+  tagline: "Destaques",
+  tituloSeo: "Intensity — mais opções e melhores preços para o seu treino",
   descricaoSeo:
-    "Seleção pessoal de suplementos que o Diogo usa e indica de verdade. Sem promessa milagrosa, sem catálogo infinito.",
+    "Suplementos para o seu treino: mais opções, melhores preços e tudo o que você precisa para treinar forte.",
   // [PENDENTE] domínio ainda não registrado. Trocar aqui quando
   // dosecerta.com.br (ou o escolhido) estiver apontado para a Vercel —
   // metadataBase, canonical, sitemap e robots leem tudo desta linha.
@@ -14,7 +14,7 @@ export const site = {
     // canal que não existe. Compartilhar produto continua funcionando,
     // porque usa o WhatsApp de quem está navegando, não o dele.
     numero: null as string | null,
-    mensagemPadrao: "Opa! Vi a Dose Certa e queria te perguntar uma coisa.",
+    mensagemPadrao: "Opa! Vi a Intensity e queria te perguntar uma coisa.",
   },
   nav: [
     { label: "Catálogo", href: "/" },

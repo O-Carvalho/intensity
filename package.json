@@ -2,7 +2,7 @@
   "name": "dose-certa",
   "version": "0.1.0",
   "private": true,
-  "description": "Dose Certa — vitrine de suplementos que o Diogo usa e indica.",
+  "description": "Intensity — vitrine de suplementos: mais opções, melhores preços.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

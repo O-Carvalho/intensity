@@ -1,11 +1,11 @@
 export const home = {
   hero: {
-    eyebrow: "seleção do diogo",
+    eyebrow: "destaques",
     // Quebras de linha propositais — o headline é composto em três
     // blocos de display expandido, como as três linhas de um rótulo.
-    linhas: ["O que eu uso", "e indico de", "verdade."] as const,
+    linhas: ["Mais opções.", "Melhores preços.", "Tudo para o seu treino."] as const,
     // A palavra da última linha que recebe o acento óxido.
-    destaque: "verdade.",
+    destaque: "Tudo para o seu treino.",
   },
   catalogo: {
     tituloDestaques: "Em destaque",
@@ -35,10 +35,8 @@ export const home = {
   sobre: {
     eyebrow: "sobre",
     titulo: "Quem indica",
-    // [PENDENTE] texto ainda não escrito pelo Diogo. Enquanto for null,
-    // a página /sobre exibe só a nota de transparência do rodapé —
-    // nunca uma biografia inventada.
-    texto: null as string | null,
+    texto:
+      "Preserve sua saúde.\nSeja cada dia mais forte.\nTrabalhe para ser melhor do que ontem e prepare-se para ser ainda melhor amanhã." as string | null,
     ctaCatalogo: "Ver o catálogo",
     ctaContato: "Falar comigo",
   },

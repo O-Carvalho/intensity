@@ -21,10 +21,6 @@ export default function Page() {
           {home.sobre.titulo}
         </h1>
 
-        {/* [PENDENTE] Enquanto home.sobre.texto for null, esta página não
-            inventa biografia — mostra só a nota de transparência, que é
-            fato confirmado. Escrever uma história plausível aqui seria
-            exatamente o tipo de fato inventado que não fazemos. */}
         {home.sobre.texto && (
           <p className="whitespace-pre-line text-lg text-text-muted">
             {home.sobre.texto}

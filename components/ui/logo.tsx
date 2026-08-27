@@ -1,10 +1,14 @@
-import { site } from "@/content/site"
+import Image from "next/image"
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`display-expandido text-lg leading-none ${className}`}>
-      {site.nome.split(" ")[0]}
-      <span className="text-oxido">{site.nome.split(" ")[1]}</span>
-    </span>
+    <Image
+      src="/logo-intensity.png"
+      alt=""
+      width={1398}
+      height={134}
+      priority
+      className={`h-7 w-auto sm:h-8 ${className}`}
+    />
   )
 }
