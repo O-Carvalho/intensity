@@ -103,7 +103,7 @@ export function CatalogoClient({
 
           <ChipsAtivos
             selecao={selecao}
-            aoRemover={(faceta, valor) => aplicar(removerOpcao(selecao, faceta, valor))}
+            aoRemover={(faceta: Faceta, valor: string) => aplicar(removerOpcao(selecao, faceta, valor))}
             aoLimpar={() => aplicar(SELECAO_VAZIA)}
           />
 
@@ -144,7 +144,7 @@ export function CatalogoClient({
         termoBusca={busca}
         opcoesCategoria={categorias}
         opcoesPlataforma={plataformas}
-        aoAlternar={(faceta, valor) => aplicar(alternarOpcao(selecao, faceta, valor))}
+        aoAlternar={(faceta: Faceta, valor: string) => aplicar(alternarOpcao(selecao, faceta, valor))}
         aoLimpar={() => aplicar(SELECAO_VAZIA)}
       />
     </section>
