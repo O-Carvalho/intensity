@@ -10,15 +10,28 @@ export const home = {
   catalogo: {
     tituloDestaques: "Em destaque",
     tituloTodos: "Catálogo completo",
+    // labelTodos/labelFiltroCategoria: dos chips antigos. Saem na Task 5,
+    // junto com a remoção de chips-categoria.tsx (único consumidor) —
+    // até lá continuam aqui para não quebrar esse componente.
     labelTodos: "Todos",
     labelFiltroCategoria: "Filtrar por categoria",
     placeholderBusca: "Buscar por nome ou marca",
-    semResultado: "Nada com esse nome. Tenta pela categoria ali em cima.",
+    semResultado: "Nada com essa combinação. Tenta tirar um filtro.",
     // Rótulo do resumo: "15 produtos · 6 categorias"
     resumo: (produtos: number, categorias: number) =>
       `${produtos} ${produtos === 1 ? "produto" : "produtos"} · ${categorias} ${
         categorias === 1 ? "categoria" : "categorias"
       }`,
+    botaoFiltrar: "Filtrar",
+    tituloPainel: "Filtros",
+    fecharPainel: "Fechar filtros",
+    limparTudo: "Limpar tudo",
+    secaoCategoria: "Categoria",
+    secaoPlataforma: "Onde comprar",
+    filtrosAtivos: "Filtros ativos",
+    removerFiltro: (valor: string) => `Remover filtro ${valor}`,
+    contagemResultado: (n: number) =>
+      `${n} ${n === 1 ? "produto" : "produtos"}`,
   },
   produto: {
     voltar: "Voltar ao catálogo",
