@@ -3,18 +3,43 @@ import { HeroCatalogo } from "@/components/sections/hero-catalogo"
 import { CatalogoClient } from "@/components/catalogo/catalogo-client"
 import { ProdutoCard } from "@/components/catalogo/produto-card"
 import { buildMetadata } from "@/lib/seo"
+import { primeiroValor, queryParaSelecao } from "@/lib/filtros"
 import { site } from "@/content/site"
 import { home } from "@/content/home"
-import { getCatalogo, getCategoriasEmUso, getDestaques } from "@/content/produtos"
+import {
+  getCatalogo,
+  getCategoriasEmUso,
+  getDestaques,
+  getPlataformasEmUso,
+} from "@/content/produtos"
 
 export const metadata = buildMetadata({ titulo: site.tituloSeo })
 
-export default async function Page() {
-  const [catalogo, destaques, categorias] = await Promise.all([
+/** Ler `searchParams` aqui, no servidor, e passar a seleção já resolvida
+ *  por props evita `useSearchParams` no cliente — que exigiria uma
+ *  fronteira <Suspense> e renderizaria a grade toda no cliente, tirando os
+ *  produtos do HTML inicial. O custo é a página virar dinâmica; o fetch da
+ *  planilha continua cacheado por 5 minutos. */
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const [catalogo, destaques, categorias, plataformas, query] = await Promise.all([
     getCatalogo(),
     getDestaques(),
     getCategoriasEmUso(),
+    getPlataformasEmUso(),
+    searchParams,
   ])
+
+  const selecaoInicial = queryParaSelecao(
+    {
+      categoria: primeiroValor(query.categoria),
+      loja: primeiroValor(query.loja),
+    },
+    { categoria: categorias, loja: plataformas },
+  )
 
   return (
     <main>
@@ -37,7 +62,12 @@ export default async function Page() {
         </section>
       )}
 
-      <CatalogoClient produtos={catalogo} categorias={categorias} />
+      <CatalogoClient
+        produtos={catalogo}
+        categorias={categorias}
+        plataformas={plataformas}
+        selecaoInicial={selecaoInicial}
+      />
     </main>
   )
 }

@@ -10,11 +10,6 @@ export const home = {
   catalogo: {
     tituloDestaques: "Em destaque",
     tituloTodos: "Catálogo completo",
-    // labelTodos/labelFiltroCategoria: dos chips antigos. Saem na Task 5,
-    // junto com a remoção de chips-categoria.tsx (único consumidor) —
-    // até lá continuam aqui para não quebrar esse componente.
-    labelTodos: "Todos",
-    labelFiltroCategoria: "Filtrar por categoria",
     placeholderBusca: "Buscar por nome ou marca",
     semResultado: "Nada com essa combinação. Tenta tirar um filtro.",
     // Rótulo do resumo: "15 produtos · 6 categorias"
