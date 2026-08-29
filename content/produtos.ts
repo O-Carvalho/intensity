@@ -50,6 +50,15 @@ const simNao = z
     }),
   )
 
+/** Loja/plataforma onde o produto é comprado. Texto livre, e não enum como
+ *  `categoria`: loja nova precisa entrar sozinha, sem republicar o site. O
+ *  preço é que "Amazon" e "amazon" viram dois filtros distintos na tela —
+ *  erro visível o bastante para o Diogo perceber e corrigir. */
+const plataforma = z
+  .string({ required_error: 'coluna "plataforma" ausente na planilha' })
+  .transform((v) => v.trim())
+  .pipe(z.string().min(2, "mínimo 2 caracteres — é a loja onde se compra"))
+
 export const produtoSchema = z.object({
   slug: z
     .string()
@@ -67,6 +76,7 @@ export const produtoSchema = z.object({
     .max(160, "máximo 160 caracteres"),
   beneficio: opcional,
   link_afiliado: linkHttps,
+  plataforma,
   destaque: simNao,
   ativo: simNao,
 })
@@ -167,4 +177,14 @@ export async function getRelacionados(
 export async function getCategoriasEmUso(): Promise<Categoria[]> {
   const catalogo = await getCatalogo()
   return CATEGORIAS.filter((c) => catalogo.some((p) => p.categoria === c))
+}
+
+/** Plataformas distintas com ao menos um produto ativo, em ordem
+ *  alfabética pt-BR. Texto livre, então a lista se monta do dado —
+ *  loja nova aparece no filtro sozinha. */
+export async function getPlataformasEmUso(): Promise<string[]> {
+  const catalogo = await getCatalogo()
+  return [...new Set(catalogo.map((p) => p.plataforma))].sort((a, b) =>
+    a.localeCompare(b, "pt-BR"),
+  )
 }

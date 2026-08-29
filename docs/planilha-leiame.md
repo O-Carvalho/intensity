@@ -14,6 +14,7 @@ sozinho em até 5 minutos. Não precisa avisar ninguém.
 | descricao_curta | sim | entre 60 e 160 caracteres. É o texto do preview no WhatsApp. |
 | beneficio | não | uma frase objetiva, sem prometer resultado |
 | link_afiliado | sim | o link completo, com seus parâmetros de rastreio |
+| plataforma | sim | onde a pessoa vai comprar: Growth, Amazon, Mercado Livre, Max Titanium… Escreva sempre igual — "Amazon" e "amazon" viram dois filtros diferentes no site. |
 | destaque | sim | S ou N. No máximo 3 produtos com S. |
 | ativo | sim | S ou N. N tira do catálogo mas mantém a página no ar, então o link que você já mandou não quebra. |
 

@@ -13,6 +13,7 @@ function linha(over: Record<string, string> = {}): Record<string, string> {
       "Duas doses por dia fecham a proteína do dia sem pesar no bolso do treino.",
     beneficio: "Fecha a cota de proteína do dia",
     link_afiliado: "https://www.growthsupplements.com.br/produto?ref=diogo",
+    plataforma: "Growth",
     destaque: "S",
     ativo: "S",
     ...over,
@@ -76,5 +77,15 @@ describe("validarCatalogo", () => {
   it("rejeita imagem em http puro", () => {
     expect(() => validarCatalogo([linha({ imagem_url: "http://loja.com/w.jpg" })]))
       .toThrow(/Linha 2.*"imagem_url"/s)
+  })
+
+  it("apara espaço em volta da plataforma", () => {
+    const [p] = validarCatalogo([linha({ plataforma: "  Mercado Livre  " })])
+    expect(p.plataforma).toBe("Mercado Livre")
+  })
+
+  it("recusa linha sem plataforma apontando LINHA e COLUNA", () => {
+    expect(() => validarCatalogo([linha(), linha({ plataforma: "" })]))
+      .toThrow(/Linha 3.*"plataforma"/s)
   })
 })
