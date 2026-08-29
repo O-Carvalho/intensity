@@ -111,6 +111,17 @@ describe("URL", () => {
     expect(queryParaSelecao({ categoria: "pre-treino", loja: "mercado-livre" }, opcoes)).toEqual(s)
   })
 
+  it("ida e volta preserva múltiplos valores na mesma faceta", () => {
+    const s = { categoria: ["Proteína", "Creatina"], loja: ["Growth", "Mercado Livre"] }
+    const query = selecaoParaQuery(s)
+    const [categoriaParam, lojaParam] = query.split("&").map((p) => p.split("=")[1])
+    const parsed = queryParaSelecao(
+      { categoria: decodeURIComponent(categoriaParam), loja: decodeURIComponent(lojaParam) },
+      opcoes,
+    )
+    expect(parsed).toEqual(s)
+  })
+
   it("seleção vazia gera query vazia", () => {
     expect(selecaoParaQuery(SELECAO_VAZIA)).toBe("")
   })

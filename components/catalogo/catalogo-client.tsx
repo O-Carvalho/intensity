@@ -114,7 +114,9 @@ export function CatalogoClient({
 
         {filtrados.length === 0 ? (
           <div className="flex flex-col items-start gap-4 border border-line bg-panel p-6">
-            <p className="text-text-muted">{home.catalogo.semResultado}</p>
+            <p className="text-text-muted">
+              {ativos > 0 ? home.catalogo.semResultadoFiltro : home.catalogo.semResultadoBusca}
+            </p>
             {ativos > 0 && (
               <button
                 type="button"

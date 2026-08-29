@@ -42,7 +42,7 @@ export function ProdutoCard({
       className={`${elevado ? "card-rotulo-elevado" : "card-rotulo"} flex h-full flex-col${animar ? " entrada-card" : ""}`}
       style={animar ? { animationDelay: `${indice * 40}ms` } : undefined}
     >
-      <ProdutoImagem src={produto.imagem_url} alt={produto.nome} />
+      <ProdutoImagem src={produto.imagem_url} alt={produto.nome} elevado={elevado} />
 
       <div className="flex flex-1 flex-col gap-4 border-t border-line p-4">
         <div className="flex flex-col gap-1.5">

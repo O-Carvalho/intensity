@@ -11,7 +11,8 @@ export const home = {
     tituloDestaques: "Em destaque",
     tituloTodos: "Catálogo completo",
     placeholderBusca: "Buscar por nome ou marca",
-    semResultado: "Nada com essa combinação. Tenta tirar um filtro.",
+    semResultadoFiltro: "Nada com essa combinação. Tenta tirar um filtro.",
+    semResultadoBusca: "Nada com esse nome. Tenta outra busca.",
     // Rótulo do resumo: "15 produtos · 6 categorias"
     resumo: (produtos: number, categorias: number) =>
       `${produtos} ${produtos === 1 ? "produto" : "produtos"} · ${categorias} ${

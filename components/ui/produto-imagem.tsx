@@ -12,10 +12,12 @@ export function ProdutoImagem({
   src,
   alt,
   priority = false,
+  elevado = false,
 }: {
   src: string
   alt: string
   priority?: boolean
+  elevado?: boolean
 }) {
   const [origem, setOrigem] = useState(src)
   const [srcAnterior, setSrcAnterior] = useState(src)
@@ -32,7 +34,11 @@ export function ProdutoImagem({
   }
 
   return (
-    <div className="relative aspect-square w-full overflow-hidden bg-panel-raised">
+    // O poço da imagem anda no sentido oposto ao do card: se o card subiu
+    // de nível (elevado), o poço desce para bg-panel; se o card ficou no
+    // nível base, o poço sobe para bg-panel-raised. Assim há sempre
+    // separação visual entre o poço e o corpo do card, nos dois níveis.
+    <div className={`relative aspect-square w-full overflow-hidden ${elevado ? "bg-panel" : "bg-panel-raised"}`}>
       <Image
         src={origem}
         alt={alt}
