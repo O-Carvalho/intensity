@@ -23,10 +23,13 @@ export function ProdutoCard({
   produto,
   indice,
   animar = true,
+  elevado = false,
 }: {
   produto: Produto
   indice: number
   animar?: boolean
+  /** Card dentro de seção que subiu de nível (fundo --color-panel). */
+  elevado?: boolean
 }) {
   const linhas = [
     { rotulo: "Marca", valor: produto.marca },
@@ -36,7 +39,7 @@ export function ProdutoCard({
   return (
     <Link
       href={`/p/${produto.slug}`}
-      className={`card-rotulo flex h-full flex-col${animar ? " entrada-card" : ""}`}
+      className={`${elevado ? "card-rotulo-elevado" : "card-rotulo"} flex h-full flex-col${animar ? " entrada-card" : ""}`}
       style={animar ? { animationDelay: `${indice * 40}ms` } : undefined}
     >
       <ProdutoImagem src={produto.imagem_url} alt={produto.nome} />

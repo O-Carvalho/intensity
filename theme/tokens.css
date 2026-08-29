@@ -97,6 +97,23 @@ html {
   }
 }
 
+/* Card sobre seção que subiu de nível. Sem isto o card se dissolve no
+   fundo quando a seção usa --color-panel. */
+.card-rotulo-elevado {
+  background-color: var(--color-panel-raised);
+  border: 1px solid var(--color-line);
+}
+
+@media (hover: hover) {
+  .card-rotulo-elevado {
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card-rotulo-elevado:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-oxido);
+  }
+}
+
 /* Entrada do catálogo: escalonada em 40ms por card, uma vez, no load.
    O delay é aplicado inline (style) pelo componente. */
 @keyframes entrada-card {

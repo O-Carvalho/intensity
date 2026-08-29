@@ -21,7 +21,7 @@ export default async function Page() {
       <HeroCatalogo produtos={catalogo.length} categorias={categorias.length} />
 
       {destaques.length > 0 && (
-        <section className="border-b border-line py-16">
+        <section className="border-b border-line bg-panel py-16">
           <Container className="flex flex-col gap-8">
             <h2 className="display-expandido text-2xl text-text">
               {home.catalogo.tituloDestaques}
@@ -29,7 +29,7 @@ export default async function Page() {
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {destaques.map((produto, i) => (
                 <li key={produto.slug} className="flex">
-                  <ProdutoCard produto={produto} indice={i} />
+                  <ProdutoCard produto={produto} indice={i} elevado />
                 </li>
               ))}
             </ul>

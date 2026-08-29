@@ -7,7 +7,7 @@ import { home } from "@/content/home"
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-line py-10">
+    <footer className="mt-24 border-t border-line bg-panel py-10">
       <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-2">
           {/* Transparência sobre comissão não é linha jurídica: em grupo
