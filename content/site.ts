@@ -5,9 +5,9 @@ export const site = {
   descricaoSeo:
     "Suplementos para o seu treino: mais opções, melhores preços e tudo o que você precisa para treinar forte.",
   // [PENDENTE] domínio ainda não registrado. Trocar aqui quando
-  // dosecerta.com.br (ou o escolhido) estiver apontado para a Vercel —
+  // intensity.com.br (ou o escolhido) estiver apontado para a Vercel —
   // metadataBase, canonical, sitemap e robots leem tudo desta linha.
-  url: "https://dose-certa.vercel.app",
+  url: "https://intensity.vercel.app",
   whatsapp: {
     // [PENDENTE] número do Diogo ainda não fornecido. Enquanto for null,
     // o site não exibe nenhum CTA de contato direto — não inventamos
